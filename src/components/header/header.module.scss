@@ -1,0 +1,32 @@
+.header {
+  height: 80px;
+  background-color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  align-items: center;
+}
+
+.button__signUp {
+  border: 1px solid #52c41a;
+  height: 51px;
+  width: 109px;
+  color: #52c41a;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.signButton__container {
+  display: flex;
+  align-items: center;
+  width: 200px;
+  justify-content: space-around;
+}
+.button__logo {
+  margin-left: 8px;
+}
+
+.button__SignIn {
+}

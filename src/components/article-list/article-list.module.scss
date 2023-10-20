@@ -1,0 +1,16 @@
+.cardList {
+  background: #ebeef3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding-top: 20px;
+}
+
+.main {
+  height: 800px;
+  background: #ebeef3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
