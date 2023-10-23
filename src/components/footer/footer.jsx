@@ -9,10 +9,11 @@ function Footer() {
   const articlesCount = useSelector((state) => state.blog.articlesCount);
   const dispatch = useDispatch();
   const currentPage = useSelector((state) => state.blog.currentPage);
+  const isArticleOpen = useSelector((state) => state.blog.isArticleOpen);
 
   const handlePageChange = (page) => {
-    dispatch(setCurrentPage(page)); // обновить текущую страницу
-    dispatch(apiArticleAll({ page })); // загрузить новые данные
+    dispatch(setCurrentPage(page));
+    dispatch(apiArticleAll({ page }));
   };
 
   return (
@@ -25,14 +26,16 @@ function Footer() {
       }}
     >
       <footer className={styles.footer}>
-        <Pagination
-          current={currentPage}
-          total={articlesCount * 2 - 114}
-          size="large"
-          showTitle="false"
-          showSizeChanger={false}
-          onChange={handlePageChange}
-        />
+        {!isArticleOpen && (
+          <Pagination
+            current={currentPage}
+            total={articlesCount * 2 - 126}
+            size="large"
+            showTitle="false"
+            showSizeChanger={false}
+            onChange={handlePageChange}
+          />
+        )}
       </footer>
     </ConfigProvider>
   );

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiArticleDetails } from '../../servis/apiArticleDetails';
+import { openArticle,closeArticle } from '../../stores/sliceBlog';
 import { formatDate } from '../../utils/dateUtils';
 import Logo from '../../assets/image/logo.png';
 
@@ -15,12 +16,20 @@ function ArticlesDetail() {
   const dispatch = useDispatch();
   const [imageError, setImageError] = useState(false);
   useEffect(() => {
-    dispatch(apiArticleDetails(slug));
-  }, [slug]);
+    if (!articleDetail || articleDetail.slug !== slug) {
+      dispatch(apiArticleDetails(slug));
+    }
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(openArticle());
+    return () => {
+      dispatch(closeArticle());
+    };
+  }, [dispatch]);
+
   const handleImageError = () => {
     setImageError(true);
   };
-  console.log(articleDetail);
   return (
     <section className={styles.article__details}>
       <div className={styles.section__Card__Left}>
