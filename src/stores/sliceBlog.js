@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { apiArticleAll } from '../servis/apiArticleAll';
 import { apiArticleDetails } from '../servis/apiArticleDetails';
+import { apiLoginUsers } from '../servis/apiLoginUsers';
+import { apiEditingAccount } from '../servis/apiEditingAccount';
+import {apiRegisterUser} from '../servis/apiRegisterUsers'
 
 const sliceBlog = createSlice({
   name: 'blog',
@@ -10,17 +13,23 @@ const sliceBlog = createSlice({
     articlesCount: 0,
     currentPage: 1,
     articleDetail: [],
-    isArticleOpen: false,
+    isOpen: false,
+    error: null,
+    user: null,
   },
   reducers: {
     setCurrentPage(state, action) {
       state.currentPage = action.payload;
     },
-    openArticle(state) {
-      state.isArticleOpen = true;
+    openWindows(state) {
+      state.isOpen = true;
     },
-    closeArticle(state) {
-      state.isArticleOpen = false;
+    closeWindows(state) {
+      state.isOpen = false;
+      state.error = null; 
+    },
+    logout(state) {
+      state.user = null;
     },
   },
   extraReducers: (builder) => {
@@ -46,11 +55,44 @@ const sliceBlog = createSlice({
     });
     builder.addCase(apiArticleDetails.rejected, (state) => {
       // state.articleDetail = [];
+      state.loading = false;
+    });
+    builder.addCase(apiLoginUsers.pending, (state) => {
       state.loading = true;
+      state.error = null; 
+    });
+    builder.addCase(apiLoginUsers.fulfilled, (state, action) => {
+      state.loading = false;
+      state.user = action.payload.user;
+      state.error = null;
+    });
+    builder.addCase(apiLoginUsers.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(apiEditingAccount.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(apiEditingAccount.fulfilled, (state, action) => {
+      state.loading = false;
+      state.user = action.payload.user; 
+    });
+    builder.addCase(apiEditingAccount.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload; 
+    });
+    builder.addCase(apiRegisterUser.fulfilled, (state, action) => {
+      state.loading = false;
+      state.user = action.payload.user;
+      state.error = null;
+    });
+    builder.addCase(apiRegisterUser.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload; 
     });
   },
 });
 
-export const { addCard, setCurrentPage,openArticle,closeArticle } = sliceBlog.actions;
+export const { setCurrentPage, openWindows, closeWindows,logout } = sliceBlog.actions;
 
 export default sliceBlog.reducer;

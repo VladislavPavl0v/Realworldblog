@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiArticleDetails } from '../../servis/apiArticleDetails';
-import { openArticle,closeArticle } from '../../stores/sliceBlog';
+import { openWindows, closeWindows } from '../../stores/sliceBlog';
 import { formatDate } from '../../utils/dateUtils';
 import Logo from '../../assets/image/logo.png';
 
@@ -20,10 +20,11 @@ function ArticlesDetail() {
       dispatch(apiArticleDetails(slug));
     }
   }, [dispatch]);
+
   useEffect(() => {
-    dispatch(openArticle());
+    dispatch(openWindows());
     return () => {
-      dispatch(closeArticle());
+      dispatch(closeWindows());
     };
   }, [dispatch]);
 

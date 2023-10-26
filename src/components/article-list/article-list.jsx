@@ -5,6 +5,9 @@ import { apiArticleAll } from '../../servis/apiArticleAll';
 import Article from '../article';
 import Loader from '../loader';
 import ArticlesDetail from '../articles-detail/articles-detail';
+import FormNewAccount from '../form-new-account';
+import FormEntrance from '../form-entrance';
+import FormEditingAccount from '../form-editing-account/form-editing-account';
 
 import styles from './article-list.module.scss';
 
@@ -45,6 +48,9 @@ function ArticleList() {
           }
         />
         <Route path="/articles/:slug" element={loading ? <Loader /> : <ArticlesDetail />} />
+        <Route path="/sign-up" element={<FormNewAccount />} />
+        <Route path="/sign-in" element={<FormEntrance />} />
+        <Route path="/profile" element={<FormEditingAccount />} />
       </Routes>
     </main>
   );

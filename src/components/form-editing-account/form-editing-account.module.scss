@@ -1,0 +1,109 @@
+.form__new__account {
+    width: 384px;
+    height: 498px;
+    background: linear-gradient(0deg, #ffffff, #ffffff), linear-gradient(0deg, #d9d9d9, #d9d9d9);
+    border: 1px solid #d9d9d9;
+    box-shadow:
+      0px 0.6087964177131653px 2.9332919120788574px 0px #00000005,
+      0px 1.4630224704742432px 7.049108028411865px 0px #00000007,
+      0px 2.7547414302825928px 13.272845268249512px 0px #00000009,
+      0px 4.91398811340332px 23.67648696899414px 0px #0000000b,
+      0px 9.19107437133789px 44.2842674255;
+    display: flex;
+    gap:5px;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+    align-items: center;
+    justify-content: center;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    &__title {
+      font-size: 20px;
+      font-weight: 400;
+    }
+      &__error {
+        color: #f5222d;
+        font-size: 13px;
+        min-height: 15px;
+        margin-left: 25px;
+
+    }
+    &__username,
+    &__email,
+    &__password {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      &__error {
+        color: #f5222d;
+        font-size: 13px;
+        min-height: 15px;
+      }
+    }
+  }
+  
+  .form__new__account__input {
+    width: 320px;
+    height: 40px;
+    border: 1px solid #d9d9d9;
+    color: #000000BF;
+    size: 16px;
+    font-weight: 400;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    &::placeholder{
+      color: #bfbfbf;
+      font-weight: 100;
+    }
+  }
+  
+  h6 {
+    font-size: 14px;
+  }
+  
+  .form__new__account__button {
+    width: 319px;
+    height: 40px;
+    background: #1890ff;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    color: white;
+  }
+  .form__new__account__button__container__title {
+    font-size: 12px;
+    font-weight: 100;
+    margin-top: 5px;
+    &__a {
+      color: #1890ff;
+    }
+  }
+  
+  .form__new__account__button__container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+  }
+  
+  .input__error {
+    border-color:#F5222D;
+  
+  }
+  
+  .inputWrapper {
+    position: relative;
+    width: 100%; 
+  }
+  
+  i {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%); 
+  }

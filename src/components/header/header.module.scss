@@ -6,6 +6,8 @@
   justify-content: space-between;
   font-size: 18px;
   align-items: center;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 .button__signUp {
@@ -17,11 +19,14 @@
   border-bottom-right-radius: 5px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .signButton__container {
   display: flex;
   align-items: center;
-  width: 200px;
+  width: 300px;
   justify-content: space-around;
 }
 .button__logo {
@@ -29,6 +34,34 @@
   color: #000000d9;
 }
 
-.button__SignIn {
+.button__SignIn,
+.button__userName,
+.button__LogOut {
   color: #000000d9;
+}
+
+.button__LogOut {
+  border: 1px solid #000000bf;
+  height: 51px;
+  width: 109px;
+  color: #000000bf;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button__userName {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+.button__logo {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
 }
