@@ -74,3 +74,34 @@
   width: 880px;
   height: 500px;
 }
+
+.containerEditButton {
+  width: 880px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.containerEditButton__buttonDelete {
+  width: 78px;
+  height: 31px;
+  border: 1px solid #f5222d;
+  color: #f5222d;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+.containerEditButton__buttonEdit {
+  display: flex;
+  width: 78px;
+  height: 31px;
+  border: 1px solid #52c41a;
+  color: #52c41a;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  justify-content: center;
+  align-items: center;
+}

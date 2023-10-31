@@ -8,6 +8,8 @@ import ArticlesDetail from '../articles-detail/articles-detail';
 import FormNewAccount from '../form-new-account';
 import FormEntrance from '../form-entrance';
 import FormEditingAccount from '../form-editing-account/form-editing-account';
+import CreateArticle from '../create-article/create-article';
+import EditArticle from '../edit-article';
 
 import styles from './article-list.module.scss';
 
@@ -51,6 +53,8 @@ function ArticleList() {
         <Route path="/sign-up" element={<FormNewAccount />} />
         <Route path="/sign-in" element={<FormEntrance />} />
         <Route path="/profile" element={<FormEditingAccount />} />
+        <Route path="/new-article" element={<CreateArticle />} />
+        <Route path="/articles/:slug/edit" element={<EditArticle />} />
       </Routes>
     </main>
   );

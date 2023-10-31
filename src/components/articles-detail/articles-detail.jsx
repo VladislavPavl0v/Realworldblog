@@ -1,17 +1,22 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiArticleDetails } from '../../servis/apiArticleDetails';
+import { apiUpdateArticle } from '../../servis/apiUpdateArticle';
 import { openWindows, closeWindows } from '../../stores/sliceBlog';
 import { formatDate } from '../../utils/dateUtils';
-import Logo from '../../assets/image/logo.png';
+import Logo from '../../assets/image/logo.svg';
 
 import styles from './articles-detail.module.scss';
 
 function ArticlesDetail() {
+  const token = useSelector((state) => state.blog.user.token);
   const articleDetail = useSelector((state) => state.blog.articleDetail);
+  const currentUser = useSelector((state) => state.blog.user);
+  const isOwner = articleDetail.author && articleDetail.author.username === currentUser.username;
+
   const { slug } = useParams();
   const dispatch = useDispatch();
   const [imageError, setImageError] = useState(false);
@@ -20,6 +25,10 @@ function ArticlesDetail() {
       dispatch(apiArticleDetails(slug));
     }
   }, [dispatch]);
+
+  const onUpdateArticle = (slug, articleData) => {
+    dispatch(apiUpdateArticle({ slug, articleUpdate: articleData, token }));
+  };
 
   useEffect(() => {
     dispatch(openWindows());
@@ -67,6 +76,16 @@ function ArticlesDetail() {
           onError={handleImageError}
         />
       </div>
+      {isOwner && (
+        <div className={styles.containerEditButton}>
+          <button className={styles.containerEditButton__buttonDelete} type="button">
+            delete
+          </button>
+          <Link to={`/articles/${slug}/edit`} className={styles.containerEditButton__buttonEdit}>
+            edit
+          </Link>
+        </div>
+      )}
       <div className={styles.body}>
         <ReactMarkdown>{articleDetail.body}</ReactMarkdown>
       </div>

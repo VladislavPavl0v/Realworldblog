@@ -33,6 +33,9 @@ function Header() {
           </>
         ) : (
           <>
+          <Link to="/new-article" className={styles.button__CreateArticle}>
+          Create article
+            </Link>
             <Link to="/profile" className={styles.button__userName}>
               {user.username}
               <img className={styles.button__logo} src={user.image} alt="logo" />

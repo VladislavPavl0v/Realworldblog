@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './article.module.scss';
 import {formatDate} from '../../utils/dateUtils'
-import Logo from '../../assets/image/logo.png';
+import Logo from '../../assets/image/logo.svg';
 
 function Article({ title, tagList, description, favoritesCount, username, date, img, slug }) {
   const [imageError, setImageError] = useState(false);

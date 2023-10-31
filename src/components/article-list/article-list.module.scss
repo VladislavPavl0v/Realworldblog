@@ -8,9 +8,11 @@
 }
 
 .main {
-  height: 800px;
+  padding-top: 20px;
+  min-height: 800px;
   background: #ebeef3;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 20px;
 }

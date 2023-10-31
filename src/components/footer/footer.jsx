@@ -9,7 +9,7 @@ function Footer() {
   const articlesCount = useSelector((state) => state.blog.articlesCount);
   const dispatch = useDispatch();
   const currentPage = useSelector((state) => state.blog.currentPage);
-  const isArticleOpen = useSelector((state) => state.blog.isArticleOpen);
+  const isOpen = useSelector((state) => state.blog.isOpen);
 
   const handlePageChange = (page) => {
     dispatch(setCurrentPage(page));
@@ -26,7 +26,7 @@ function Footer() {
       }}
     >
       <footer className={styles.footer}>
-        {!isArticleOpen && (
+        {!isOpen && (
           <Pagination
             current={currentPage}
             total={articlesCount * 2 - 135}

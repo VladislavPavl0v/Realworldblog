@@ -57,22 +57,20 @@ function FormNewAccount() {
 
   const onSubmit = (data) => {
     dispatch(apiRegisterUser(data)).then((response) => {
-      if (response.payload) {
-        dispatch(
-          apiLoginUsers({
-            username: data.username,
-            password: data.password,
-          }),
-        ).then((loginResponse) => {
-          console.log(loginResponse)
-          if (loginResponse.payload && !loginResponse.error) {
-            notification.success({
-              message: 'Новый акаунт создан',
-            });
-            reset();
-            navigate('/');
-          }
-        });
+      if (!response.error) {
+        setTimeout(() => {
+          dispatch(
+            apiLoginUsers({
+              username: data.username,
+              password: data.password,
+            }),
+          );
+          notification.success({
+            message: 'Новый акаунт создан',
+          });
+          reset();
+          navigate('/');
+        }, 1000);
       }
     });
   };
