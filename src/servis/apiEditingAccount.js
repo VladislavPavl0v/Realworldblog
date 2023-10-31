@@ -1,13 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-
-// import axios from 'axios';
+import { BASE_URL } from './config';
 
 export const apiEditingAccount = createAsyncThunk(
   'articles/editProfile',
   async (updatedUserInfo, { rejectWithValue,getState }) => {
     try {
       const token = getState().blog.user.token;
-      const response = await fetch(`https://blog.kata.academy/api/user`, {
+      const response = await fetch(`${BASE_URL}/user`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

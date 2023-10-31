@@ -6,6 +6,8 @@ import { apiEditingAccount } from '../servis/apiEditingAccount';
 import { apiRegisterUser } from '../servis/apiRegisterUsers';
 import { apiCreateArticle } from '../servis/apiCreateArticle';
 import { apiUpdateArticle } from '../servis/apiUpdateArticle';
+import { apiDeleteArticle } from '../servis/apiDeleteArticle';
+import { favoriteArticle, unfavoriteArticle } from '../servis/apiFavorite';
 
 const sliceBlog = createSlice({
   name: 'blog',
@@ -41,6 +43,7 @@ const sliceBlog = createSlice({
     builder.addCase(apiArticleAll.fulfilled, (state, action) => {
       state.loading = false;
       state.articles = action.payload.articles;
+      state.favoritedCount = action.payload.articles.favoritedCount;
       state.articlesCount = action.payload.articlesCount;
     });
 
@@ -110,7 +113,6 @@ const sliceBlog = createSlice({
     builder.addCase(apiCreateArticle.rejected, (state, action) => {
       state.error = action.payload;
       state.loading = false;
-      state.error = action.payload;
     });
     builder.addCase(apiUpdateArticle.pending, (state) => {
       state.loading = true;
@@ -126,6 +128,39 @@ const sliceBlog = createSlice({
     builder.addCase(apiUpdateArticle.rejected, (state, action) => {
       state.error = action.payload;
       state.loading = true;
+    });
+    builder.addCase(apiDeleteArticle.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(apiDeleteArticle.fulfilled, (state) => {
+      state.articlesCount -= 1;
+      state.loading = false;
+    });
+    builder.addCase(apiDeleteArticle.rejected, (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(favoriteArticle.fulfilled, (state, action) => {
+      const article = state.articles.find((a) => a.slug === action.payload.article.slug);
+      if (article) {
+        article.favoritesCount = action.payload.article.favoritesCount;
+        article.favorited = true;
+      }
+      if (state.articleDetail && state.articleDetail.slug === action.payload.article.slug) {
+        state.articleDetail.favoritesCount = action.payload.article.favoritesCount;
+        state.articleDetail.favorited = true;
+      }
+    });
+    builder.addCase(unfavoriteArticle.fulfilled, (state, action) => {
+      const article = state.articles.find((a) => a.slug === action.payload.article.slug);
+      if (article) {
+        article.favoritesCount = action.payload.article.favoritesCount;
+        article.favorited = false;
+      }
+      if (state.articleDetail && state.articleDetail.slug === action.payload.article.slug) {
+        state.articleDetail.favoritesCount = action.payload.article.favoritesCount;
+        state.articleDetail.favorited = false;
+      }
     });
   },
 });

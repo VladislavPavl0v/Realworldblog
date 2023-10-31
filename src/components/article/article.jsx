@@ -1,15 +1,29 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './article.module.scss';
 import { formatDate } from '../../utils/dateUtils';
 import Logo from '../../assets/image/logo.svg';
+import { favoriteArticle, unfavoriteArticle } from '../../servis/apiFavorite';
 
 function Article({ title, tagList, description, favoritesCount, username, date, img, slug }) {
+  const token = useSelector((state) => state.blog?.user?.token || null);
+
+  const dispatch = useDispatch();
   const [imageError, setImageError] = useState(false);
   const handleImageError = () => {
     setImageError(true);
+  };
+
+  const handleFavoriteClick = async () => {
+    if (favoritesCount > 0) {
+      await dispatch(unfavoriteArticle({ slug, token }));
+    } else {
+      await dispatch(favoriteArticle({ slug, token }));
+    }
   };
 
   return (
@@ -21,12 +35,20 @@ function Article({ title, tagList, description, favoritesCount, username, date, 
           </Link>
           <div className={styles.section__favoritesCount__And__like}>
             <span className={styles.favoritesCount}>{favoritesCount}</span>
-            <span className={styles.like}>&#x2661;</span>
+            <span
+              className={styles.like}
+              onClick={handleFavoriteClick}
+              onKeyPress={handleFavoriteClick}
+              role="button"
+              tabIndex={0}
+            >
+              {favoritesCount > 0 ? '❤️' : '♡'}
+            </span>
           </div>
         </div>
         <div className={styles.section__tag}>
-          {tagList.map((tag,index) => (
-            <span key={index} className={styles.tag}>
+          {tagList.map((tag) => (
+            <span key={uuidv4()} className={styles.tag}>
               {tag}
             </span>
           ))}
@@ -41,7 +63,7 @@ function Article({ title, tagList, description, favoritesCount, username, date, 
         <img
           className={styles.img}
           src={imageError ? Logo : img}
-          alt="logo"
+          alt="User avatar"
           onError={handleImageError}
         />
       </div>
@@ -51,15 +73,16 @@ function Article({ title, tagList, description, favoritesCount, username, date, 
 Article.propTypes = {
   title: PropTypes.string.isRequired,
   tagList: PropTypes.arrayOf(PropTypes.string).isRequired,
-  description: PropTypes.string.isRequired,
   favoritesCount: PropTypes.number.isRequired,
   username: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   img: PropTypes.string,
   slug: PropTypes.string.isRequired,
+  description: PropTypes.string,
 };
 
 Article.defaultProps = {
   img: Logo,
+  description: null,
 };
 export default Article;

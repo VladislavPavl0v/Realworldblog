@@ -1,11 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { BASE_URL } from './config';
 
 export const apiLoginUsers = createAsyncThunk(
     'users/login',
     async (userData, { rejectWithValue }) => {
       try {
-        const response = await axios.post('https://blog.kata.academy/api/users/login', {
+        const response = await axios.post(`${BASE_URL}/users/login`, {
           user: {
             email: userData.Email,
             password: userData.password,

@@ -136,7 +136,7 @@ function EditArticle() {
         </div>
         <div className={styles.create__article__TextContainer}>
           <span>Text</span>
-          <input
+          <textarea
             className={classNames(styles.create__article__TextContainer__input, {
               [styles.input__error]: errors.text,
             })}

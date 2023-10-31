@@ -6,8 +6,8 @@ import { notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
 import 'font-awesome/css/font-awesome.min.css';
-import { closeWindows, openWindows } from '../../stores/sliceBlog';
 import { apiCreateArticle } from '../../servis/apiCreateArticle';
+import { closeWindows, openWindows } from '../../stores/sliceBlog';
 
 import styles from './create-article.module.scss';
 
@@ -118,7 +118,7 @@ function CreateArticle() {
         </div>
         <div className={styles.create__article__TextContainer}>
           <span>Text</span>
-          <input
+          <textarea
             className={classNames(styles.create__article__TextContainer__input, {
               [styles.input__error]: errors.text,
             })}

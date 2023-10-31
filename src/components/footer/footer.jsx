@@ -29,7 +29,7 @@ function Footer() {
         {!isOpen && (
           <Pagination
             current={currentPage}
-            total={articlesCount * 2 - 135}
+            total={articlesCount * 2 - 166}
             size="large"
             showTitle="false"
             showSizeChanger={false}

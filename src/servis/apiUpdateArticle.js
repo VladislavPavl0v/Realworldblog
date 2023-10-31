@@ -1,10 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { BASE_URL } from './config';
 
 export const apiUpdateArticle = createAsyncThunk(
     'articles/updateArticle',
     async ({ slug, articleUpdate, token }, { rejectWithValue }) => {
       try {
-        const response = await fetch(`https://blog.kata.academy/api/articles/${slug}`, {
+        const response = await fetch(`${BASE_URL}/articles/${slug}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
