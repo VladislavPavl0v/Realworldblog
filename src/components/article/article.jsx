@@ -1,9 +1,9 @@
 /* eslint-disable react/no-array-index-key */
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styles from './article.module.scss';
-import {formatDate} from '../../utils/dateUtils'
+import { formatDate } from '../../utils/dateUtils';
 import Logo from '../../assets/image/logo.svg';
 
 function Article({ title, tagList, description, favoritesCount, username, date, img, slug }) {
@@ -25,7 +25,7 @@ function Article({ title, tagList, description, favoritesCount, username, date, 
           </div>
         </div>
         <div className={styles.section__tag}>
-          {tagList.map((tag, index) => (
+          {tagList.map((tag,index) => (
             <span key={index} className={styles.tag}>
               {tag}
             </span>
@@ -48,5 +48,18 @@ function Article({ title, tagList, description, favoritesCount, username, date, 
     </li>
   );
 }
+Article.propTypes = {
+  title: PropTypes.string.isRequired,
+  tagList: PropTypes.arrayOf(PropTypes.string).isRequired,
+  description: PropTypes.string.isRequired,
+  favoritesCount: PropTypes.number.isRequired,
+  username: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  img: PropTypes.string,
+  slug: PropTypes.string.isRequired,
+};
 
+Article.defaultProps = {
+  img: Logo,
+};
 export default Article;

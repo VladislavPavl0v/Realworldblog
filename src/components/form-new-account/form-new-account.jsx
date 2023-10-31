@@ -1,9 +1,7 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import classNames from 'classnames';
 import 'font-awesome/css/font-awesome.min.css';
 import { Checkbox, notification } from 'antd';
@@ -209,7 +207,10 @@ function FormNewAccount() {
           </button>
           <span className={styles.form__new__account__button__container__title}>
             Already have an account?
-            <a className={styles.form__new__account__button__container__title__a}> Sign In.</a>
+            <Link to="/sign-in" className={styles.form__new__account__button__container__title__a}>
+              {' '}
+              Sign In.
+            </Link>
           </span>
         </div>
       </form>

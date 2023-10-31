@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import classNames from 'classnames';
 import 'font-awesome/css/font-awesome.min.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { notification } from 'antd';
 import { openWindows, closeWindows } from '../../stores/sliceBlog';
@@ -122,7 +122,7 @@ function FormEntrance() {
           </button>
           <span className={styles.form__entrance__account__button__container__title}>
             Already have an account?
-            <a className={styles.form__entrance__account__button__container__title__a}> Sign Up.</a>
+            <Link to="/sign-up" className={styles.form__entrance__account__button__container__title__a}> Sign Up.</Link>
           </span>
         </div>
       </form>

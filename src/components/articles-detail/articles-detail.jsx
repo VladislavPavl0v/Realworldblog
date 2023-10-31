@@ -1,10 +1,9 @@
-/* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { Button, message, Popconfirm } from 'antd';
 import ReactMarkdown from 'react-markdown';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiArticleDetails } from '../../servis/apiArticleDetails';
-import { apiUpdateArticle } from '../../servis/apiUpdateArticle';
 import { openWindows, closeWindows } from '../../stores/sliceBlog';
 import { formatDate } from '../../utils/dateUtils';
 import Logo from '../../assets/image/logo.svg';
@@ -12,10 +11,9 @@ import Logo from '../../assets/image/logo.svg';
 import styles from './articles-detail.module.scss';
 
 function ArticlesDetail() {
-  const token = useSelector((state) => state.blog.user.token);
   const articleDetail = useSelector((state) => state.blog.articleDetail);
   const currentUser = useSelector((state) => state.blog.user);
-  const isOwner = articleDetail.author && articleDetail.author.username === currentUser.username;
+  const isOwner = articleDetail.author?.username === currentUser?.username;
 
   const { slug } = useParams();
   const dispatch = useDispatch();
@@ -24,21 +22,26 @@ function ArticlesDetail() {
     if (!articleDetail || articleDetail.slug !== slug) {
       dispatch(apiArticleDetails(slug));
     }
-  }, [dispatch]);
 
-  const onUpdateArticle = (slug, articleData) => {
-    dispatch(apiUpdateArticle({ slug, articleUpdate: articleData, token }));
-  };
-
-  useEffect(() => {
     dispatch(openWindows());
+
     return () => {
       dispatch(closeWindows());
     };
-  }, [dispatch]);
+  }, [dispatch, articleDetail, slug]);
 
   const handleImageError = () => {
     setImageError(true);
+  };
+
+  const confirm = (e: React.MouseEvent<HTMLElement>) => {
+    console.log(e);
+    message.success('Click on Yes');
+  };
+  
+  const cancel = (e: React.MouseEvent<HTMLElement>) => {
+    console.log(e);
+    message.error('Click on No');
   };
   return (
     <section className={styles.article__details}>
@@ -52,8 +55,8 @@ function ArticlesDetail() {
         </div>
         <div className={styles.section__tag}>
           {articleDetail.tagList &&
-            articleDetail.tagList.map((tag, index) => (
-              <span key={index} className={styles.tag}>
+            articleDetail.tagList.map((tag) => (
+              <span key={tag} className={styles.tag}>
                 {tag}
               </span>
             ))}
@@ -78,9 +81,17 @@ function ArticlesDetail() {
       </div>
       {isOwner && (
         <div className={styles.containerEditButton}>
-          <button className={styles.containerEditButton__buttonDelete} type="button">
-            delete
-          </button>
+          <Popconfirm
+            title="Delete the task"
+            description="Are you sure to delete this task?"
+            onConfirm={confirm}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+            placement='right'
+          >
+            <Button danger>Delete</Button>
+          </Popconfirm>
           <Link to={`/articles/${slug}/edit`} className={styles.containerEditButton__buttonEdit}>
             edit
           </Link>

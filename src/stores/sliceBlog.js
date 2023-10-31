@@ -5,6 +5,7 @@ import { apiLoginUsers } from '../servis/apiLoginUsers';
 import { apiEditingAccount } from '../servis/apiEditingAccount';
 import { apiRegisterUser } from '../servis/apiRegisterUsers';
 import { apiCreateArticle } from '../servis/apiCreateArticle';
+import { apiUpdateArticle } from '../servis/apiUpdateArticle';
 
 const sliceBlog = createSlice({
   name: 'blog',
@@ -17,7 +18,6 @@ const sliceBlog = createSlice({
     isOpen: false,
     error: null,
     user: null,
-    createArticle: null,
   },
   reducers: {
     setCurrentPage(state, action) {
@@ -56,7 +56,6 @@ const sliceBlog = createSlice({
       state.loading = false;
     });
     builder.addCase(apiArticleDetails.rejected, (state) => {
-      // state.articleDetail = [];
       state.loading = false;
     });
     builder.addCase(apiLoginUsers.pending, (state) => {
@@ -89,6 +88,9 @@ const sliceBlog = createSlice({
       state.loading = false;
       state.error = action.payload;
     });
+    builder.addCase(apiRegisterUser.pending, (state) => {
+      state.loading = true;
+    });
     builder.addCase(apiRegisterUser.fulfilled, (state, action) => {
       state.loading = false;
       state.user = action.payload.user;
@@ -101,11 +103,29 @@ const sliceBlog = createSlice({
     builder.addCase(apiCreateArticle.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(apiCreateArticle.fulfilled, (state, action) => {
-      state.createArticle = action.payload;
+    builder.addCase(apiCreateArticle.fulfilled, (state) => {
+      state.loading = false;
+      state.articlesCount += 1;
     });
     builder.addCase(apiCreateArticle.rejected, (state, action) => {
       state.error = action.payload;
+      state.loading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(apiUpdateArticle.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(apiUpdateArticle.fulfilled, (state, action) => {
+      state.loading = false;
+      const updatedArticles = state.articles.map((article) =>
+        article.slug === action.payload.article.slug ? action.payload.article : article,
+      );
+      state.articles = updatedArticles;
+      state.articleDetail = action.payload.article;
+    });
+    builder.addCase(apiUpdateArticle.rejected, (state, action) => {
+      state.error = action.payload;
+      state.loading = true;
     });
   },
 });
