@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { openWindows, closeWindows } from '../../stores/sliceBlog';
 import { apiRegisterUser } from '../../servis/apiRegisterUsers';
 import { apiLoginUsers } from '../../servis/apiLoginUsers';
+import { SIGN_IN_PATH, ROOT_PATH } from '../../routers/routePaths';
 
 import styles from './form-new-account.module.scss';
 
@@ -67,7 +68,7 @@ function FormNewAccount() {
             message: 'Новый акаунт создан',
           });
           reset();
-          navigate('/');
+          navigate(ROOT_PATH);
         }, 1000);
       }
     });
@@ -207,8 +208,10 @@ function FormNewAccount() {
           </button>
           <span className={styles.form__new__account__button__container__title}>
             Already have an account?
-            <Link to="/sign-in" className={styles.form__new__account__button__container__title__a}>
-              {' '}
+            <Link
+              to={SIGN_IN_PATH}
+              className={styles.form__new__account__button__container__title__a}
+            >
               Sign In.
             </Link>
           </span>

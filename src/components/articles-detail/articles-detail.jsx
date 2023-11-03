@@ -11,6 +11,7 @@ import { favoriteArticle, unfavoriteArticle } from '../../servis/apiFavorite';
 import { formatDate } from '../../utils/dateUtils';
 import Logo from '../../assets/image/logo.svg';
 import styles from './articles-detail.module.scss';
+import { EDIT_ARTICLE_PATH } from '../../routers/routePaths';
 
 function ArticlesDetail() {
   const articleDetail = useSelector((state) => state.blog.articleDetail);
@@ -21,13 +22,12 @@ function ArticlesDetail() {
   const error = useSelector((state) => state.blog.error);
   const [apiMessage, contextHolder] = notification.useNotification();
   const navigate = useNavigate();
-
   const { slug } = useParams();
   const dispatch = useDispatch();
   const [imageError, setImageError] = useState(false);
   useEffect(() => {
     if (!articleDetail || articleDetail.slug !== slug) {
-      dispatch(apiArticleDetails(slug));
+      dispatch(apiArticleDetails({slug, token}));
     }
 
     dispatch(openWindows());
@@ -35,7 +35,7 @@ function ArticlesDetail() {
     return () => {
       dispatch(closeWindows());
     };
-  }, [dispatch, articleDetail, slug]);
+  }, [dispatch, articleDetail, slug, token]);
 
   const handleImageError = () => {
     setImageError(true);
@@ -68,7 +68,11 @@ function ArticlesDetail() {
   }, [error]);
 
   const handleFavoriteClick = async () => {
-    if (articleDetail.favoritesCount > 0) {
+    if (!token) {
+      notification.error({ message: 'для установки лайка войдите в аккаунт', duration: 2 });
+      return;
+    }
+    if (articleDetail.favorited) {
       await dispatch(unfavoriteArticle({ slug, token }));
     } else {
       await dispatch(favoriteArticle({ slug, token }));
@@ -91,7 +95,7 @@ function ArticlesDetail() {
                 role="button"
                 tabIndex={0}
               >
-                {articleDetail.favoritesCount > 0 ? '❤️' : '♡'}
+                {articleDetail.favorited ? '❤️' : '♡'}
               </span>
             </div>
           </div>
@@ -134,7 +138,7 @@ function ArticlesDetail() {
             >
               <Button danger>Delete</Button>
             </Popconfirm>
-            <Link to={`/articles/${slug}/edit`} className={styles.containerEditButton__buttonEdit}>
+            <Link to={EDIT_ARTICLE_PATH} className={styles.containerEditButton__buttonEdit}>
               edit
             </Link>
           </div>

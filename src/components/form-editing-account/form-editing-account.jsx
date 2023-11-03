@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import { openWindows, closeWindows } from '../../stores/sliceBlog';
 import { apiEditingAccount } from '../../servis/apiEditingAccount';
 import styles from './form-editing-account.module.scss';
+import { ROOT_PATH } from '../../routers/routePaths';
 
 function FormEditingAccount() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -59,7 +60,7 @@ function FormEditingAccount() {
     notification.success({
       message: 'данные успешно изменены',
     });
-    navigate('/');
+    navigate(ROOT_PATH);
   };
 
   useEffect(() => {

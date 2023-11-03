@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import 'font-awesome/css/font-awesome.min.css';
 import { closeWindows, openWindows } from '../../stores/sliceBlog';
 import { apiUpdateArticle } from '../../servis/apiUpdateArticle';
+import { ARTICLES_PATH } from '../../routers/routePaths';
 
 import styles from './edit-article.module.scss';
 
@@ -87,7 +88,7 @@ function EditArticle() {
         notification.success({
           message: 'Статья успешно обновлена!',
         });
-        navigate(`/articles/${articleDetail.slug}`);
+        navigate(`${ARTICLES_PATH}/${articleDetail.slug}`);
         reset();
       });
     }

@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import 'font-awesome/css/font-awesome.min.css';
 import { apiCreateArticle } from '../../servis/apiCreateArticle';
 import { closeWindows, openWindows } from '../../stores/sliceBlog';
+import { ROOT_PATH } from '../../routers/routePaths';
 
 import styles from './create-article.module.scss';
 
@@ -71,7 +72,7 @@ function CreateArticle() {
       notification.success({
         message: 'Статья успешно добавлена!',
       });
-      navigate('/');
+      navigate(ROOT_PATH);
     });
   };
 

@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { notification } from 'antd';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -8,10 +9,20 @@ import styles from './article.module.scss';
 import { formatDate } from '../../utils/dateUtils';
 import Logo from '../../assets/image/logo.svg';
 import { favoriteArticle, unfavoriteArticle } from '../../servis/apiFavorite';
+import { ARTICLES_PATH } from '../../routers/routePaths';
 
-function Article({ title, tagList, description, favoritesCount, username, date, img, slug }) {
+function Article({
+  title,
+  tagList,
+  description,
+  favoritesCount,
+  username,
+  date,
+  img,
+  slug,
+  favorited,
+}) {
   const token = useSelector((state) => state.blog?.user?.token || null);
-
   const dispatch = useDispatch();
   const [imageError, setImageError] = useState(false);
   const handleImageError = () => {
@@ -19,18 +30,22 @@ function Article({ title, tagList, description, favoritesCount, username, date, 
   };
 
   const handleFavoriteClick = async () => {
-    if (favoritesCount > 0) {
+    if (!token) {
+      notification.error({ message: 'для установки лайка войдите в аккаунт', duration: 2 });
+      return;
+    }
+    if (favorited) {
       await dispatch(unfavoriteArticle({ slug, token }));
     } else {
       await dispatch(favoriteArticle({ slug, token }));
     }
   };
-
+  
   return (
     <li className={styles.card}>
       <div className={styles.section__Card__Left}>
         <div className={styles.section__title__And__Like}>
-          <Link to={`/articles/${slug}`} className={styles.titleLink}>
+          <Link to={`${ARTICLES_PATH}/${slug}`} className={styles.titleLink}>
             <h5 className={styles.title}>{title}</h5>
           </Link>
           <div className={styles.section__favoritesCount__And__like}>
@@ -42,7 +57,7 @@ function Article({ title, tagList, description, favoritesCount, username, date, 
               role="button"
               tabIndex={0}
             >
-              {favoritesCount > 0 ? '❤️' : '♡'}
+              {favorited ? '❤️' : '♡'}
             </span>
           </div>
         </div>
@@ -79,10 +94,12 @@ Article.propTypes = {
   img: PropTypes.string,
   slug: PropTypes.string.isRequired,
   description: PropTypes.string,
+  favorited: PropTypes.bool,
 };
 
 Article.defaultProps = {
   img: Logo,
   description: null,
+  favorited: false,
 };
 export default Article;

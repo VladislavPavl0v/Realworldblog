@@ -4,12 +4,13 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import classNames from 'classnames';
 import 'font-awesome/css/font-awesome.min.css';
-import { useNavigate,Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { notification } from 'antd';
 import { openWindows, closeWindows } from '../../stores/sliceBlog';
 import { apiLoginUsers } from '../../servis/apiLoginUsers';
 import styles from './form-entrance.module.scss';
+import { SIGN_UP_PATH, ROOT_PATH } from '../../routers/routePaths';
 
 function FormEntrance() {
   const [apiMessage, contextHolder] = notification.useNotification();
@@ -55,7 +56,7 @@ function FormEntrance() {
         notification.success({
           message: 'Вы успешно вошли в свой аккаунт',
         });
-        navigate('/');
+        navigate(ROOT_PATH);
         reset();
       })
       .catch(() => {});
@@ -122,7 +123,13 @@ function FormEntrance() {
           </button>
           <span className={styles.form__entrance__account__button__container__title}>
             Already have an account?
-            <Link to="/sign-up" className={styles.form__entrance__account__button__container__title__a}> Sign Up.</Link>
+            <Link
+              to={SIGN_UP_PATH}
+              className={styles.form__entrance__account__button__container__title__a}
+            >
+              {' '}
+              Sign Up.
+            </Link>
           </span>
         </div>
       </form>

@@ -3,13 +3,17 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { BASE_URL } from './config';
 
-export const apiArticleDetails = createAsyncThunk('blog/apiArticleDetails', async (slug) => {
+export const apiArticleDetails = createAsyncThunk(
+  'blog/apiArticleDetails',
+  async ({ slug, token }) => {
     try {
-        const response = await axios.get(`${BASE_URL}/articles/${slug}`);
-        return response.data;
+      const headers = token ? { Authorization: `Token ${token}` } : {};
 
-      } catch (error) {
-        console.error('Error fetching article details:', error);
-        throw error;
-      }
-  }); 
+      const response = await axios.get(`${BASE_URL}/articles/${slug}`, { headers });
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching article details:', error);
+      throw error;
+    }
+  },
+);

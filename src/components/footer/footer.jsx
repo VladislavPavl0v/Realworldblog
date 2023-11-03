@@ -10,10 +10,11 @@ function Footer() {
   const dispatch = useDispatch();
   const currentPage = useSelector((state) => state.blog.currentPage);
   const isOpen = useSelector((state) => state.blog.isOpen);
+  const token = useSelector((state) => state.blog.user?.token);
 
   const handlePageChange = (page) => {
     dispatch(setCurrentPage(page));
-    dispatch(apiArticleAll({ page }));
+    dispatch(apiArticleAll({ page,token }));
   };
 
   return (
@@ -29,7 +30,7 @@ function Footer() {
         {!isOpen && (
           <Pagination
             current={currentPage}
-            total={articlesCount * 2 - 166}
+            total={articlesCount * 2 - 175}
             size="large"
             showTitle="false"
             showSizeChanger={false}
